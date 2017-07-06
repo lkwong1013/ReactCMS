@@ -1,26 +1,14 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './www/main.css';
-// import App from './app/app';
-// import registerServiceWorker from './registerServiceWorker';
-//
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
-
-
 import React from 'react';
 import {render} from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Main from './app/Main'; // Our custom react component
+import Main from './Main'; // Our custom react component
 
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-import SecondPage from "./app/SecondPage";
-import FirstPage from "./app/FirstPage";
-import CountryForm from "./app/CountryForm";
-import UserForm from "./app/UserForm";
-import './www/main.css';
-
-import registerServiceWorker from './registerServiceWorker';
+import SecondPage from "./SecondPage";
+import FirstPage from "./FirstPage";
+import CountryForm from "./CountryForm";
+import UserForm from "./UserForm";
+import Layout from "./Layout";
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -37,6 +25,5 @@ render(
             <Route path="userForm" name="userForm" component={UserForm}></Route>
         </Route>
     </Router>,
-    document.getElementById('root')
+    document.getElementById('app')
 );
-registerServiceWorker();

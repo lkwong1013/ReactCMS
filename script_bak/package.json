@@ -2,17 +2,10 @@
   "name": "script",
   "version": "0.1.0",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
-  },
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10",
-    "material-ui": "^0.16.4",
-    "react-router": "^3.0.2",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-scripts": "1.0.10"
   },
   "scripts": {
     "start": "react-scripts start",
