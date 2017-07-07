@@ -13,12 +13,17 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 
-jar {
-	baseName = 'bootLesson'
-	version = '0.0.1-SNAPSHOT'
+//jar {
+//	baseName = 'bootLesson'
+//	version = '0.0.1-SNAPSHOT'
+//}
+war {
+	baseName = 'react-cms'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -35,5 +40,9 @@ task myCopy(type: Copy) {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
+//	compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'	// https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+	compileOnly("org.projectlombok:lombok:1.16.16")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
 }

@@ -62,7 +62,8 @@ export default class CountryForm extends React.Component {
         var x = this.child.getAPIPath();
         console.log(x.apiPath);
 
-        fetch(x.apiPath + "/country/api/addSubmit/", {
+        // fetch(x.apiPath + "/country/api/addSubmit/", {
+        fetch("/test", {        // Modified for internal app call
                 method: "POST",
                 body: new FormData(document.getElementById('countryForm')),
             }
