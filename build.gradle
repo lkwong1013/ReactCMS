@@ -33,7 +33,8 @@ repositories {
 
 task myCopy(type: Copy) {
 	from 'script/build'
-	into 'src/main/resources/static'
+	into 'src/main/resources/templates/'
+//	into 'src/main/webapp/WEB-INF/views'
 }
 
 
@@ -41,8 +42,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
-//	compile group: 'org.thymeleaf', name: 'thymeleaf', version: '2.0.5'	// https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.4.RELEASE'
 	compileOnly("org.projectlombok:lombok:1.16.16")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
 
 }

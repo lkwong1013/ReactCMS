@@ -1,12 +1,12 @@
 package com.example;
 
-import com.example.ResponseObject.BaseResponseObj;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+        import com.example.ResponseObject.BaseResponseObj;
+        import org.springframework.stereotype.Controller;
+        import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class DemoController {
-    
+
     @RequestMapping(value="/echo")
     public String echo(@RequestParam(value="request", defaultValue="Hello!") String request) {
         return request;
@@ -19,8 +19,8 @@ public class DemoController {
     }
 
     @RequestMapping(value = "/")
-    public String index() {
-        return "static/index.html";
+    public String homePage() {
+        return "index";
     }
 
 }
