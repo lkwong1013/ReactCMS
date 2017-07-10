@@ -20,7 +20,7 @@ public class DemoController {
 
     @RequestMapping(value = "/")
     public String index() {
-        return "index.html";
+        return "static/index.html";
     }
 
 }
