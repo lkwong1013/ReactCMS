@@ -15,7 +15,8 @@ export default class BasicComponent extends React.Component {
             dialogHeader : this.props.state.dialogHeader,
             dialogMessage : this.props.state.dialogMessage,
             openCircularProgress : this.props.state.openCircularProgress,
-            apiPath : "http://localhost:8080/BaseProject",
+            // apiPath : "http://localhost:8080/BaseProject",
+            apiPath : "/react-cms",
         }
     }
 

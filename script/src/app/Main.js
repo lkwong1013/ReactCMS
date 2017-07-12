@@ -40,6 +40,8 @@ const muiTheme = getMuiTheme({
 
 const CLOSED_DRAWER_CONTENT_LEFT_MARGIN = '50px';
 const OPENED_DRAWER_CONTENT_LEFT_MARGIN = '300px';
+const APP_BAR_TOP_MARGIN = '-100px';
+const CONTENT_TOP_MARGIN = '100px';
 
 export class Main extends React.Component {
     constructor(props, context) {
@@ -118,7 +120,7 @@ export class Main extends React.Component {
                             iconClassNameRight="muidocs-icon-navigation-expand-more"
                             onLeftIconButtonTouchTap={this.handleDrawerToggle}
                             zDepth={1}
-                            style={{backgroundColor:'#4CAF50', zIndex: 1600}}
+                            style={{backgroundColor:'#4CAF50', zIndex: 1600, position:'fixed', marginTop:APP_BAR_TOP_MARGIN}}
                         />
 
                         {/*Global Dialog Box*/}
@@ -134,6 +136,7 @@ export class Main extends React.Component {
 
                         <Drawer
                             open={this.state.openDrawer}
+                            docked={true}
                         >
                             <div className="sidebar-menu" style={{height: '100%', backgroundColor: '#eee'}}>
                                 <div style={{paddingTop: '65px'}}>
@@ -155,7 +158,7 @@ export class Main extends React.Component {
                             </div>
                         </Drawer>
                     </div>
-                    <div style={{marginLeft:this.state.contentMarginLeft}}>
+                    <div className="content" style={{marginLeft:this.state.contentMarginLeft, marginTop:CONTENT_TOP_MARGIN}}>
                         {this.props.children}
                     </div>
                 </div>

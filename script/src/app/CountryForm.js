@@ -1,10 +1,4 @@
 /**
- * Created by LKW on 2017/3/4.
- */
-/**
- * Created by LKW on 2017/2/26.
- */
-/**
  * Created by LKW on 2017/2/26.
  */
 import React, {Component} from 'react';
@@ -63,7 +57,7 @@ export default class CountryForm extends React.Component {
         console.log(x.apiPath);
 
         // fetch(x.apiPath + "/country/api/addSubmit/", {
-        fetch("/test", {        // Modified for internal app call
+        fetch(x.apiPath + "/test", {        // Modified for internal app call
                 method: "POST",
                 body: new FormData(document.getElementById('countryForm')),
             }
