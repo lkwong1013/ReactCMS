@@ -33,7 +33,7 @@ repositories {
 
 task myCopy(type: Copy) {
 	from 'script/build'
-	into 'src/main/resources/templates/'
+	into 'src/main/webapp/'
 //	into 'src/main/webapp/WEB-INF/views'
 }
 
@@ -45,6 +45,7 @@ dependencies {
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.4.RELEASE'
 	compileOnly("org.projectlombok:lombok:1.16.16")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
 
 
 

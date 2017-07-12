@@ -1,5 +1,7 @@
 package com.example.config;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
@@ -49,17 +51,25 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
-@Configuration
-class AppConfig extends WebMvcConfigurerAdapter {
 
+@EnableAutoConfiguration
+public class AppConfig {
     @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-//        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/views/");
-        viewResolver.setSuffix(".html");
+    WebMvcConfigurer configurer () {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addResourceHandlers (ResourceHandlerRegistry registry) {
+                registry.addResourceHandler("/static/**").
+                        addResourceLocations("/WEB-INF/static/");
+            }
+        };
+    }
 
-        return viewResolver;
+    public static void main (String[] args) {
+
+        SpringApplication app =
+                new SpringApplication(AppConfig.class);
+        app.run(args);
     }
 
 //    @Bean
@@ -115,12 +125,7 @@ class AppConfig extends WebMvcConfigurerAdapter {
 //        return mailSender;
 //    }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/source/**").addResourceLocations("/source/");
-        registry.addResourceHandler("/lib/**").addResourceLocations("/lib/");
-        registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/views/static/");
-    }
+
 
     /**
      *
