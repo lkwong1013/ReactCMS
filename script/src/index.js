@@ -18,6 +18,7 @@ import SecondPage from "./app/SecondPage";
 import FirstPage from "./app/FirstPage";
 import CountryForm from "./app/CountryForm";
 import UserForm from "./app/UserForm";
+import ListTest from "./app/ListTest";
 import './www/main.css';
 
 import registerServiceWorker from './registerServiceWorker';
@@ -35,6 +36,7 @@ render(
             <Route path="firstPage" name="firstPage" component={FirstPage}></Route>
             <Route path="countryForm" name="countryForm" component={CountryForm}></Route>
             <Route path="userForm" name="userForm" component={UserForm}></Route>
+            <Route path="listTest" name="listTest" component={ListTest}></Route>
         </Route>
     </Router>,
     document.getElementById('root')

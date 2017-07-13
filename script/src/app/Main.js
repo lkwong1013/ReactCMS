@@ -116,7 +116,7 @@ export class Main extends React.Component {
 
                     <div>
                         <AppBar
-                            title="Title Title"
+                            title="React CMS Test"
                             iconClassNameRight="muidocs-icon-navigation-expand-more"
                             onLeftIconButtonTouchTap={this.handleDrawerToggle}
                             zDepth={1}
@@ -153,6 +153,9 @@ export class Main extends React.Component {
                                     </Link>
                                     <Link to="userForm" onClick={this.handler}>
                                         <MenuItem onTouchTap={this.handleSelectedMenu}>User Form</MenuItem>
+                                    </Link>
+                                    <Link to="listTest" onClick={this.handler}>
+                                        <MenuItem onTouchTap={this.handleSelectedMenu}>List Test</MenuItem>
                                     </Link>
                                 </div>
                             </div>

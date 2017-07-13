@@ -46,6 +46,9 @@ dependencies {
 	compileOnly("org.projectlombok:lombok:1.16.16")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '1.5.4.RELEASE'
+
 
 
 

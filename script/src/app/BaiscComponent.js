@@ -17,6 +17,8 @@ export default class BasicComponent extends React.Component {
             openCircularProgress : this.props.state.openCircularProgress,
             // apiPath : "http://localhost:8080/BaseProject",
             apiPath : "/react-cms",
+            defaultRowPerPage: [5,10,15],
+            defaultNumberofRows: 5,
         }
     }
 
@@ -41,6 +43,10 @@ export default class BasicComponent extends React.Component {
         this.setState({
             openDialog: props.state.openDialog
         });
+    }
+
+    getParent() {
+        return this.state;
     }
 
     getAPIPath() {
