@@ -49,7 +49,19 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '1.5.4.RELEASE'
 
-
+//	def tomcatVersion = '7.0.59'
+//	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+//			"org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+//			"org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+//	testCompile group: 'junit', name: 'junit', version: '4.11'
+//	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 
 
 }
+
+//tomcat {
+//	httpPort = 8080
+//	httpsPort = 8443
+//	enableSSL = true
+//	contextPath = 'react-cms'
+//}

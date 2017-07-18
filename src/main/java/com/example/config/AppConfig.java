@@ -62,6 +62,10 @@ public class AppConfig {
                 registry.addResourceHandler("/static/**").
                         addResourceLocations("/WEB-INF/static/");
             }
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*");
+            }
         };
     }
 
