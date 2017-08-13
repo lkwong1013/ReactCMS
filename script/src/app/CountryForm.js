@@ -16,6 +16,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import { connect } from "react-redux"
 import { setting } from "./actions"
 import { country } from "./actions"
+import axios from "axios";
 
 // Initial the state from reducer
 @connect((store) => {
@@ -23,7 +24,7 @@ import { country } from "./actions"
         setting: store.setting.setting,
         dialog: store.setting.dialog,
         userFetched: store.setting.fetched,
-        country: store.country.country,
+        country: store.country,
     };
 })
 export default class CountryForm extends React.Component {
@@ -85,52 +86,85 @@ export default class CountryForm extends React.Component {
         // console.log(x.apiPath);
 
         // fetch(x.apiPath + "/country/api/addSubmit/", {
-        // fetch(this.props.setting.apiPath + "/country/api/addSubmit/", {
-        this.props.dispatch(country.submitCountry('',''))
-            .then(function(returnedValue) {
-            console.log(returnedValue);
-        });
+        // fetch(this.props.setting.apiPath + "/country/api/addSubmit/",
 
-        fetch(this.props.setting.apiPath + "/test/", {
-                method: "POST",
-                body: new FormData(document.getElementById('countryForm')),
-            }
-        ).then(function(returnedValue) {
-            return returnedValue.json();
-        }).then((json) => {
-            console.log(json);
+        this.props.dispatch(
+            country.submitCountry('','')
+        );
 
-            if (json.status != 200) {
+        console.log("Result : " + this.props.country.result);
+        console.log("Error : " + this.props.country.error);
+        // fetch(this.props.setting.apiPath + "/test/", {
+        //         method: "POST",
+        //         body: new FormData(document.getElementById('countryForm')),
+        //     }
+        // ).then(function(returnedValue) {
+        //     return returnedValue.json();
+        // }).then((json) => {
+        //     console.log(json);
+        //
+        //     if (json.status != 200) {
+        //
+        //     }
+        //
+        //     this.setState({
+        //         dialogMessage: json.message,
+        //         dialogHeader: json.status == 200 ? "Success" : "Warning",
+        //         // openDialog: true,
+        //         countryCode: json.status == 200 ? "" : this.state.countryCode,        // Clear input field
+        //         countryName: json.status == 200 ? "" : this.state.countryName,
+        //         openCircularProgress : 'none',
+        //     })
+        //     this.props.dispatch(setting.setDialog(json.status == 200 ? "Success" : "Warning", json.message))
+        //     this.props.dispatch(setting.setIsOpenDialog(true))
+        //     this.props.dispatch(setting.setCircularProgress('none'))
+        //
+        // }).catch((error) => {
+        //     this.setState({
+        //         // dialogMessage: "Server error",
+        //         dialogHeader: "Warning",
+        //         // openDialog: true,
+        //         openCircularProgress : 'none',
+        //     })
+        //
+        //     this.props.dispatch(setting.setDialog("Warning", "Server Error"))
+        //     this.props.dispatch(setting.setIsOpenDialog(true))
+        //     this.props.dispatch(setting.setCircularProgress('none'))
+        //     console.log(error);
+        // });
 
-            }
+        e.preventDefault();
+    }
 
-            this.setState({
-                dialogMessage: json.message,
-                dialogHeader: json.status == 200 ? "Success" : "Warning",
-                // openDialog: true,
-                countryCode: json.status == 200 ? "" : this.state.countryCode,        // Clear input field
-                countryName: json.status == 200 ? "" : this.state.countryName,
-                openCircularProgress : 'none',
-            })
-            this.props.dispatch(setting.setDialog(json.status == 200 ? "Success" : "Warning", json.message))
+    submitCountry(e) {
+        var querystring = require('querystring');
+         this.props.dispatch(setting.setCircularProgress('inline-block'))
+        // this.props.dispatch(country.submitCountry());
+        e.preventDefault();
+        axios.post('http://localhost:8123/react-cms/test/',
+
+        querystring.stringify({
+            // countryCode: 'SSS',
+            // countryName: 'Flintstone'
+        })
+
+        ).then((response) => {
+            //dispatch({type: "FETCH_COUNTRY_FULFILLED", payload: response.data})
+            this.props.dispatch(setting.setDialog("Success", response.data.message))
             this.props.dispatch(setting.setIsOpenDialog(true))
             this.props.dispatch(setting.setCircularProgress('none'))
-
-        }).catch((error) => {
-            this.setState({
-                // dialogMessage: "Server error",
-                dialogHeader: "Warning",
-                // openDialog: true,
-                openCircularProgress : 'none',
-            })
-
+            console.log(response.data);
+        })
+        .catch((err) => {
+            //dispatch({type: "FETCH_COUNTRY_REJECTED", payload: 'Error'})
             this.props.dispatch(setting.setDialog("Warning", "Server Error"))
             this.props.dispatch(setting.setIsOpenDialog(true))
             this.props.dispatch(setting.setCircularProgress('none'))
-            console.log(error);
-        });
+            console.log(err);
+        })
 
-        e.preventDefault();
+
+
     }
 
     componentDidMount() {
@@ -171,8 +205,8 @@ export default class CountryForm extends React.Component {
                     ref={(child) => {this.child = child;}}/> {/* Pass state to BasicComponent to control component config*/}
                 <h1>Country</h1>
                 <h2>Create New Country</h2>
-
-                <form id="countryForm" onSubmit={this.onSave}>
+                <form id="countryForm" onSubmit={this.submitCountry.bind(this)}>
+                {/*<form id="countryForm" onSubmit={this.onSave}>*/}
                     <div className="col-md-12">
                         <div className="row"><span>Country Code</span></div>
                         <div className="row">
@@ -201,7 +235,7 @@ export default class CountryForm extends React.Component {
                         </div>
                         <div className="row">
                             <RaisedButton
-                                onClick={this.onSave.bind(this)}
+                                onClick={this.submitCountry.bind(this)}
                                 label="Submit"
                                 secondary={true}
                                 type="submit" />
@@ -211,6 +245,11 @@ export default class CountryForm extends React.Component {
                             <CircularProgress
                                 style={{display : this.props.setting.openCircularProgress}}
                             />
+                        </div>
+                        <div className="row">Result : <span>
+                            {this.props.country.result}
+                            {this.props.country.error}
+                            </span>
                         </div>
                     </div>
                 </form>

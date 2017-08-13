@@ -8,15 +8,16 @@ export default function reducer(state={
     },
     fetching: false,
     error: null,
+    result: null,
 
 }, action) {
 
     switch (action.type) {
-        case "FETCH_USER": {
+        case "FETCH_COUNTRY": {
             return {...state, fetching: true}
         }
-        case "FETCH_COUNTRY_SUBMIT": {
-            return {...state, fetching: true}
+        case "FETCH_COUNTRY_FULFILLED": {
+            return {...state, fetching: true, result: action.payload}
         }
         case "FETCH_COUNTRY_REJECTED": {
             return {...state, fetching: false, error: action.payload}

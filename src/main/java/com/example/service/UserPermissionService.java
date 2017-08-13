@@ -1,0 +1,27 @@
+package com.example.service;
+
+
+import com.example.neo4j.domain.UserPermission;
+import com.example.neo4j.domain.UserRole;
+import com.example.object.AuthorityInfo;
+import com.example.object.request.UserPermissionRequest;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by LKW on 2017/8/6.
+ */
+public interface UserPermissionService {
+
+    void savePermission(UserPermissionRequest request);
+
+    List<UserPermission> findByUrlLike(String url);
+
+    void loadRoleAuthMap();
+
+    Map<String, List<AuthorityInfo>> getRoleAuthMap();
+
+    Boolean chkAuthByRole(List<UserRole> roleList, String requestURI);
+
+}

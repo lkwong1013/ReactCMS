@@ -6,9 +6,9 @@ DEBUG_PORT=8000
 MVN_OPT=
 
 # Compile frontend
-cd script
-npm run build
-cd ..
+#cd script
+#npm run build
+#cd ..
 gradle clean myCopy war
 docker build -t $PROJECT_NAME .
 docker stop $PROJECT_NAME
