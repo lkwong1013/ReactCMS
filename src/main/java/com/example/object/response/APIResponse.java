@@ -29,9 +29,16 @@ public class APIResponse {
         return new ResponseEntity<APIResponse>(this, status);
     }
 
-    public ResponseEntity<APIResponse> send(HttpStatus status, String error) {
+    public ResponseEntity<APIResponse> send(HttpStatus status, Object data) {
+        this.status = status;
+        this.data = data;
+        return new ResponseEntity<APIResponse>(this, status);
+    }
+
+    public ResponseEntity<APIResponse> send(HttpStatus status, Object data, String error) {
         this.status = status;
         this.error = error;
+        this.data = data;
         return new ResponseEntity<APIResponse>(this, status);
     }
 

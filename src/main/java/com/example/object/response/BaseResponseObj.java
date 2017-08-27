@@ -20,11 +20,15 @@ public class BaseResponseObj<T> {
 
     private String forwardUrl = "";
 
+    private T body;
+
     public BaseResponseObj() {
        // super();
     }
 
     public BaseResponseObj(HttpStatus status, T body) {
+        this.status = status;
+        this.body = body;
         //super(body, status);
     }
 
