@@ -127,19 +127,19 @@ public class AppConfig extends SpringBootServletInitializer {
         return mailSender;
     }
 
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
-    }
+//    @Bean
+//    public FilterRegistrationBean corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader("*");
+//        config.addAllowedMethod("*");
+//        source.registerCorsConfiguration("/**", config);
+//        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+//        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//        return bean;
+//    }
 
     @Bean
     public org.neo4j.ogm.config.Configuration getConfiguration() {
@@ -151,16 +151,16 @@ public class AppConfig extends SpringBootServletInitializer {
         return config;
     }
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        // with domain entity base package(s)
-        return new SessionFactory("com.example.neo4j.domain");
-    }
-
-    @Bean
-    public Neo4jTransactionManager transactionManager() {
-        return new Neo4jTransactionManager((Session) sessionFactory());
-    }
+//    @Bean
+//    public SessionFactory sessionFactory() {
+//        // with domain entity base package(s)
+//        return new SessionFactory("com.example.neo4j.domain");
+//    }
+//
+//    @Bean
+//    public Neo4jTransactionManager transactionManager() {
+//        return new Neo4jTransactionManager(sessionFactory());
+//    }
 
 
 
