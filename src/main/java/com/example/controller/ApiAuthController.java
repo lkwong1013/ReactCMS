@@ -27,7 +27,7 @@ import static com.example.controller.ApiGenericController.ROOT_URL;
  * Created by LKW on 2017/4/22.
  */
 
-@Controller
+@RestController
 @RequestMapping(ROOT_URL + ApiAuthController.MODULE)
 public class ApiAuthController /*extends ApiGenericController<Long, UserAccount, LoginRequestObj>*/ {
 
