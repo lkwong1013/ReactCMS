@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.example.exception.DuplicateRecordFoundException;
 import com.example.neo4j.domain.UserEntity;
 import com.example.neo4j.domain.UserRole;
 import com.example.neo4j.repo.UserEntityRepo;
@@ -61,7 +62,8 @@ public class UserServiceImpl implements UserService {
                 return new BaseResponseObj(HttpStatus.UNAUTHORIZED, "User not found.");
             }
             if (userEntity.size() > 1) {
-                return new BaseResponseObj(HttpStatus.UNAUTHORIZED, "Duplicate user found.");
+//                return new BaseResponseObj(HttpStatus.UNAUTHORIZED, "Duplicate user found.");
+                throw new DuplicateRecordFoundException(systemMessageService.getMessage("msg.duplicateRecordFound"));
             }
 
             UserEntity user = userEntity.get(0);
@@ -105,7 +107,8 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> chkDuplicateRecord = this.userEntityRepo.findByName(request.getUserName()); // Check advTitle
         if (chkDuplicateRecord != null && chkDuplicateRecord.size() > 0) {
             log.error(logPrefix + MSG_DUPLICATE_RECORD);
-            return new BaseResponseObj(HttpStatus.UNAUTHORIZED, MSG_DUPLICATE_RECORD);
+//            return new BaseResponseObj(HttpStatus.UNAUTHORIZED, MSG_DUPLICATE_RECORD);
+            throw new DuplicateRecordFoundException(systemMessageService.getMessage("msg.duplicateRecordFound"));
         }
 
         try {

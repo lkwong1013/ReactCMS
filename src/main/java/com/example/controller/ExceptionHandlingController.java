@@ -41,6 +41,6 @@ public class ExceptionHandlingController {
 
     @ExceptionHandler(value = BaseException.class)
     public ResponseEntity exception(BaseException exception) {
-        return new APIResponse().send(exception.getStatusCode(), exception.getDeveloperMessage());
+        return new APIResponse().send(exception.getStatusCode(), exception.getMessage(), exception.getDeveloperMessage());
     }
 }
