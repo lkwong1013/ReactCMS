@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.4.0.RELEASE'
+		springBootVersion = '1.5.6.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -46,7 +46,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.4.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '1.5.4.RELEASE'
-	compile('org.springframework.boot:spring-boot-starter-data-neo4j')
+//	compile('org.springframework.boot:spring-boot-starter-data-neo4j')
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-neo4j
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j', version: '1.5.6.RELEASE'
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compileOnly("org.projectlombok:lombok:1.16.16")
 	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
@@ -59,6 +62,12 @@ dependencies {
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.5.6.RELEASE'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
 
 
 
