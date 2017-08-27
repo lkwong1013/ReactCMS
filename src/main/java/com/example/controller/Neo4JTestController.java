@@ -9,13 +9,17 @@ import com.example.object.response.BaseResponseObj;
 import com.example.service.UserPermissionService;
 import com.example.service.UserRoleService;
 import com.example.utils.SearchingCriteria;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,10 +55,13 @@ public class Neo4JTestController {
     public BaseResponseObj searchTest(@RequestBody UserSearchRequest request) throws IllegalAccessException {
 
         searchRequestSearchingCriteria.convert(request);
-        Pageable pageRequest = new PageRequest(0, 5);
-        List<UserEntity> result = userEntityRepo.searchByCriteria(request.getName(), request.getEmail(), pageRequest);
+        //Pageable pageRequest = new PageRequest(0, 5);
+        Pageable pageRequest = new PageRequest(request.getPage(), request.getPageSize(), request.getSortDirection(), request.getSortBy());
+        List<UserEntity> result = userEntityRepo.searchByCriteria(request.getName(), request.getEmail(), pageRequest.getPageNumber(), pageRequest.getPageSize(), "user.email desc" , "DESC");
+        Page<UserEntity> pageResult = userEntityRepo.searchByCriteriaPageTest(request.getName(), request.getEmail(), pageRequest);
         log.info(request.getName());
-        return new BaseResponseObj(HttpStatus.OK, result);
+        log.info(request.getEmail());
+        return new BaseResponseObj(HttpStatus.OK, pageResult);
 
     }
 
@@ -67,16 +74,19 @@ public class Neo4JTestController {
     }
 
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "lang", dataType = "String", required = true, value = "tc", defaultValue = "tc"),
+            @ApiImplicitParam(paramType = "header", name = "username", dataType = "String", required = true, value = "admin_0807", defaultValue = "admin_0807"),
+            @ApiImplicitParam(paramType = "header", name = "token", dataType = "String", required = true, value = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213", defaultValue = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213"),
+    })
     @RequestMapping(value = {"/api/getData"}, method = {RequestMethod.GET})
     @ResponseBody
     public ResponseEntity getNeo4JData() {
 
 
-
         List<UserEntity> userAccountMList = userEntityRepo.findAll();
 
         ResponseEntity response = new ResponseEntity(userAccountMList, HttpStatus.OK);
-
 
 
         Thread t = new Thread(new ThreadTesting(0));
