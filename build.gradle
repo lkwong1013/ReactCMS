@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.4.0.RELEASE'
+		springBootVersion = '1.5.6.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -13,11 +13,17 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
-jar {
-	baseName = 'bootLesson'
-	version = '0.0.1-SNAPSHOT'
+
+//jar {
+//	baseName = 'bootLesson'
+//	version = '0.0.1-SNAPSHOT'
+//}
+war {
+	baseName = 'react-cms'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -25,9 +31,59 @@ repositories {
 	mavenCentral()
 }
 
+task myCopy(type: Copy) {
+	from 'script/build'
+	into 'src/main/webapp/'
+//	into 'src/main/webapp/WEB-INF/views'
+}
+
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.2.1.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '1.5.4.RELEASE'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.4.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '1.5.4.RELEASE'
+//	compile('org.springframework.boot:spring-boot-starter-data-neo4j')
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-neo4j
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-neo4j', version: '1.5.6.RELEASE'
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compileOnly("org.projectlombok:lombok:1.16.16")
+	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.8.2'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.8.2'
+
+	// https://mvnrepository.com/artifact/com.google.guava/guava
+	compile group: 'com.google.guava', name: 'guava', version: '22.0'
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.5.6.RELEASE'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+
+
+//	def tomcatVersion = '7.0.59'
+//	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+//			"org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+//			"org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+//	testCompile group: 'junit', name: 'junit', version: '4.11'
+//	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+
+
 }
+
+//tomcat {
+//	httpPort = 8080
+//	httpsPort = 8443
+//	enableSSL = true
+//	contextPath = 'react-cms'
+//}
