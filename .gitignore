@@ -8,3 +8,4 @@ gradle-app.setting
 .gradletasknamecache
 /gradle/
 gradlew*
+script/node_modules/
