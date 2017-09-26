@@ -39,11 +39,7 @@ public class Neo4JTestController {
     @Autowired
     private UserEntityRepo userEntityRepo;
 
-    @Autowired
-    private UserPermissionService userPermissionService;
 
-    @Autowired
-    private UserRoleService userRoleService;
 
     @Autowired
     private SearchingCriteria<UserSearchRequest> searchRequestSearchingCriteria;
@@ -74,11 +70,11 @@ public class Neo4JTestController {
     }
 
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "header", name = "lang", dataType = "String", required = true, value = "tc", defaultValue = "tc"),
-            @ApiImplicitParam(paramType = "header", name = "username", dataType = "String", required = true, value = "admin_0807", defaultValue = "admin_0807"),
-            @ApiImplicitParam(paramType = "header", name = "token", dataType = "String", required = true, value = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213", defaultValue = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213"),
-    })
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(paramType = "header", name = "lang", dataType = "String", required = true, value = "tc", defaultValue = "tc"),
+//            @ApiImplicitParam(paramType = "header", name = "username", dataType = "String", required = true, value = "admin_0807", defaultValue = "admin_0807"),
+//            @ApiImplicitParam(paramType = "header", name = "token", dataType = "String", required = true, value = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213", defaultValue = "e7502b4fc78137e7966db5daa5bad675565ecbbc44bdcf3cab42b03f1c0c9213"),
+//    })
     @RequestMapping(value = {"/api/getData"}, method = {RequestMethod.GET})
     @ResponseBody
     public ResponseEntity getNeo4JData() {
@@ -106,25 +102,7 @@ public class Neo4JTestController {
 
     }
 
-    @RequestMapping(value = {"/api/addPermission"}, method = {RequestMethod.POST})
-    @ResponseBody
-    public ResponseEntity addPermission(@RequestBody UserPermissionRequest request) {
 
-        userPermissionService.savePermission(request);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = {"/api/addRole"}, method = {RequestMethod.POST})
-    @ResponseBody
-    public ResponseEntity addRole(@RequestBody UserRoleRequest request) {
-
-        userRoleService.createRole(request);
-        userPermissionService.loadRoleAuthMap();
-        return new ResponseEntity(HttpStatus.OK);
-
-    }
 
 
 }
