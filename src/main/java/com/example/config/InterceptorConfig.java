@@ -15,7 +15,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  */
 
 @Configuration
-public class AppConfig2 extends WebMvcConfigurerAdapter {
+public class InterceptorConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     SecurityInterceptor securityInterceptor;
@@ -40,7 +40,7 @@ public class AppConfig2 extends WebMvcConfigurerAdapter {
 //        registry.addInterceptor(securityInterceptor()).excludePathPatterns("/**/api/**");
 		/*----- [End] Security Interceptor -----*/
 		/*----- [Start] API Interceptor -----*/
-        registry.addInterceptor(apiInterceptor()).addPathPatterns("/**/api/**").excludePathPatterns("/**/login");
+        registry.addInterceptor(apiInterceptor()).addPathPatterns("/**/api/**").excludePathPatterns("/**/login", "/**/register");
 		/*----- [End] API Interceptor -----*/
 		/*----- [Start] Locale Change Interceptor -----*/
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();

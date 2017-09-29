@@ -7,6 +7,7 @@ import com.example.neo4j.repo.UserEntityRepo;
 import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
+import com.example.object.request.UserLogoutRequest;
 import com.example.object.response.BaseResponseObj;
 import com.example.object.response.UserLoginSession;
 import com.example.service.SystemMessageService;
@@ -46,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private SystemMessageService systemMessageService;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     Logger log = Logger.getLogger(this.getClass());
 
@@ -205,5 +209,44 @@ public class UserServiceImpl implements UserService {
         userAccount.setKeyExpiryDate(newExpiryDate);
         this.userEntityRepo.save(userAccount);
     }
+
+    public BaseResponseObj memberLogout() {
+
+        String logPrefix = "memberLogout(): ";
+        BaseResponseObj response = new BaseResponseObj();
+        String currentUser = httpServletRequest.getHeader("username");
+        if (StringUtils.isBlank(currentUser)) {
+            log.error(logPrefix + "User not Found");
+            response = new BaseResponseObj(HttpStatus.BAD_REQUEST, "User not Found");
+            return response;
+        }
+
+        List<UserEntity> userEntity = this.userEntityRepo.findByName(currentUser);
+
+        try {
+
+            // Clear user access token
+            if (userEntity != null && userEntity.size() == 1) {
+                UserEntity user = userEntity.get(0);
+                user.setKeyExpiryDate(new Date());
+                user.setAccessKey("");
+                userEntityRepo.save(userEntity);
+            } else {
+                log.error(logPrefix + "User not Found");
+                response = new BaseResponseObj(HttpStatus.BAD_REQUEST, "Unexpected Result - record is not unique");
+                return response;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logPrefix + e.getMessage());
+            response = new BaseResponseObj(HttpStatus.UNAUTHORIZED, e.getMessage());
+            return response;
+        }
+
+        return response;
+
+    }
+
 
 }

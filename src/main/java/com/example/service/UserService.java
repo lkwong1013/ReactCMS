@@ -2,8 +2,10 @@ package com.example.service;
 
 
 import com.example.neo4j.domain.UserEntity;
+import com.example.object.request.BaseRequestObj;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
+import com.example.object.request.UserLogoutRequest;
 import com.example.object.response.BaseResponseObj;
 
 import java.util.List;
@@ -22,4 +24,6 @@ public interface UserService  {
     void extendSession(UserEntity userAccount);
 
     List<UserEntity> findByName(String username);
+
+    BaseResponseObj memberLogout();
 }
