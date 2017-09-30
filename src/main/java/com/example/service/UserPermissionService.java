@@ -4,7 +4,9 @@ package com.example.service;
 import com.example.neo4j.domain.UserPermission;
 import com.example.neo4j.domain.UserRole;
 import com.example.object.AuthorityInfo;
+import com.example.object.request.PermissionSearchRequest;
 import com.example.object.request.UserPermissionRequest;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,8 @@ import java.util.Map;
  * Created by LKW on 2017/8/6.
  */
 public interface UserPermissionService {
+
+    Page<UserPermission> permissionList(PermissionSearchRequest request) throws IllegalAccessException;
 
     void savePermission(UserPermissionRequest request);
 

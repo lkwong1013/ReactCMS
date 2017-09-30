@@ -5,13 +5,18 @@ import com.example.neo4j.domain.UserRole;
 import com.example.neo4j.repo.UserPermissionRepository;
 import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.AuthorityInfo;
+import com.example.object.request.PermissionSearchRequest;
 import com.example.object.request.UserPermissionRequest;
 import com.example.service.UserPermissionService;
+import com.example.utils.SearchingCriteria;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,9 +41,25 @@ public class UserPermissionServiceImpl implements UserPermissionService, Initial
     @Autowired
     private UserRoleRepository userRoleRepository;
 
+    @Autowired
+    private SearchingCriteria<PermissionSearchRequest> searchRequestSearchingCriteria;
+
     private final Logger log = Logger.getLogger(this.getClass());
 
     private Map<String, List<AuthorityInfo>> roleAuthorityMap;
+
+
+    public Page<UserPermission> permissionList(PermissionSearchRequest request) throws IllegalAccessException {
+
+        searchRequestSearchingCriteria.convert(request);
+        Pageable pageRequest = new PageRequest(request.getPage(), request.getPageSize(), request.getSortDirection(), request.getSortBy());
+        Page<UserPermission> pageResult = userPermissionRepository.searchByCriteriaPage(request.getUrl(), request.getPermissionName(), pageRequest);
+        log.info(request.getUrl());
+        log.info(request.getPermissionName());
+
+        return pageResult;
+
+    }
 
     public void savePermission(UserPermissionRequest request) {
 
