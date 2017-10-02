@@ -43,7 +43,6 @@ public class ApiAuthController /*extends ApiGenericController<Long, UserAccount,
     Logger log = Logger.getLogger(this.getClass());
 
    @RequestMapping(value = {"/login"}, method = {RequestMethod.POST})
-   @ResponseBody
    public LoginResponseObj login(@RequestBody LoginRequestObj requestObj) throws Exception {
 
        String logPrefix = "login():";
@@ -67,7 +66,7 @@ public class ApiAuthController /*extends ApiGenericController<Long, UserAccount,
        return loginResponseObj;
    }
 
-   @ResponseBody
+
     @RequestMapping(value = {"/register"}, method = {RequestMethod.POST})
     public BaseResponseObj register(@RequestBody UserEntityRequest formData) throws Exception {
         return userService.registration(formData);

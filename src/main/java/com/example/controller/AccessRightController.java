@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.neo4j.domain.UserEntity;
 import com.example.object.request.PermissionSearchRequest;
+import com.example.object.request.RoleSearchRequest;
 import com.example.object.request.UserPermissionRequest;
 import com.example.object.request.UserRoleRequest;
 import com.example.object.response.BaseResponseObj;
@@ -46,16 +47,19 @@ public class AccessRightController {
         return new BaseResponseObj(HttpStatus.OK, userPermissionService.permissionList(request));
     }
 
-    @RequestMapping(value = {"/api/addPermission"}, method = {RequestMethod.PUT})
+    @RequestMapping(value = {"/addPermission"}, method = {RequestMethod.PUT})
     public ResponseEntity addPermission(@RequestBody UserPermissionRequest request) {
 
         userPermissionService.savePermission(request);
         return new ResponseEntity(HttpStatus.OK);
-
     }
 
+    @RequestMapping(value = {"/roleList"}, method = {RequestMethod.POST})
+    public BaseResponseObj roleList(@RequestBody RoleSearchRequest request) throws IllegalAccessException {
+        return new BaseResponseObj(HttpStatus.OK, userRoleService.roleList(request));
+    }
 
-    @RequestMapping(value = {"/api/addRole"}, method = {RequestMethod.PUT})
+    @RequestMapping(value = {"/addRole"}, method = {RequestMethod.PUT})
     public ResponseEntity addRole(@RequestBody UserRoleRequest request) {
 
         userRoleService.createRole(request);
