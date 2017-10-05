@@ -88,4 +88,10 @@ public class AccessRightController {
         return new BaseResponseObj();
     }
 
+    @RequestMapping(value = "/deleteRole/{id}", method = {RequestMethod.DELETE})
+    public BaseResponseObj removeRole(@PathVariable("id") Long id) {
+        userRoleService.removeRole(id);
+        return new BaseResponseObj();
+    }
+
 }

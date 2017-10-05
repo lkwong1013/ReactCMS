@@ -136,6 +136,17 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     }
 
+    public void removeRole(Long id) {
+
+        UserRole source = userRoleRepository.findOne(id);
+        if (source != null) {
+            userRoleRepository.delete(id);
+        } else {
+            throw new RecordNotFoundException();
+        }
+
+    }
+
 
 
 }

@@ -20,4 +20,6 @@ public interface UserRoleService {
 
     void updateRole(Long id, UserRoleRequest request);
 
+    void removeRole(Long id);
+
 }
