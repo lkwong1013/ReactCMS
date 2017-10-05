@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus;
  */
 public class DuplicateRecordFoundException extends BaseException {
 
+    public DuplicateRecordFoundException() {
+        super(HttpStatus.BAD_REQUEST, "Duplicate Record found");
+    }
+
     public DuplicateRecordFoundException(String message) {
         super(HttpStatus.BAD_REQUEST, message);
     }
