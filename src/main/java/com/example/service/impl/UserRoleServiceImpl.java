@@ -9,6 +9,7 @@ import com.example.neo4j.repo.UserPermissionRepository;
 import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.request.RoleSearchRequest;
 import com.example.object.request.UserRoleRequest;
+import com.example.object.response.accessRight.UserRoleResponse;
 import com.example.service.UserRoleService;
 import com.example.utils.SearchingCriteria;
 import com.google.common.collect.Lists;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 
@@ -52,12 +54,38 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     }
 
+    public UserRoleResponse getUserRole(Long id) {
+
+        UserRole source = userRoleRepository.findOne(id);
+        if (source != null) {
+            UserRoleResponse response = new UserRoleResponse();
+            response.setRoleName(source.getRoleName());
+            response.setPermissionList(source.getHavePermission());
+            return response;
+        } else {
+            throw new RecordNotFoundException();
+        }
+
+    }
+
     public void createRole(UserRoleRequest request) {
 
         UserRole userRole = new UserRole();
         userRole.setRoleName(request.getRoleName());
         Iterable <UserPermission> userPermission = userPermissionRepository.findAll(request.getPermissionIdList());
 
+
+        // Request Parameter Check
+        if (StringUtils.isBlank(request.getRoleName())) {
+            throw new ParameterMissingException("Role Name");
+        }
+
+        // Duplication Check
+        List<UserRole> chkDuplicate = new ArrayList<>();
+        chkDuplicate = userRoleRepository.findByRoleName(request.getRoleName());
+        if (chkDuplicate != null && chkDuplicate.size() > 0) {
+            throw new DuplicateRecordFoundException();
+        }
 
         if (userPermission != null) {
             List<UserPermission> permissionList = Lists.newArrayList(userPermission);
@@ -106,7 +134,8 @@ public class UserRoleServiceImpl implements UserRoleService {
 
         userRoleRepository.save(source);
 
-
     }
+
+
 
 }

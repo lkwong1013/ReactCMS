@@ -4,6 +4,7 @@ package com.example.service;
 import com.example.neo4j.domain.UserRole;
 import com.example.object.request.RoleSearchRequest;
 import com.example.object.request.UserRoleRequest;
+import com.example.object.response.accessRight.UserRoleResponse;
 import org.springframework.data.domain.Page;
 
 /**
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 public interface UserRoleService {
 
     void createRole(UserRoleRequest request);
+
+    UserRoleResponse getUserRole(Long id);
 
     Page<UserRole> roleList(RoleSearchRequest request) throws IllegalAccessException;
 

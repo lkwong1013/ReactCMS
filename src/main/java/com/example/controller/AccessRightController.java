@@ -69,6 +69,11 @@ public class AccessRightController {
         return new BaseResponseObj(HttpStatus.OK, userRoleService.roleList(request));
     }
 
+    @RequestMapping(value = "/getRole/{id}", method = {RequestMethod.POST})
+    public BaseResponseObj getRole(@PathVariable("id") Long id) {
+        return new BaseResponseObj(HttpStatus.OK, userRoleService.getUserRole(id));
+    }
+
     @RequestMapping(value = {"/addRole"}, method = {RequestMethod.PUT})
     public BaseResponseObj addRole(@RequestBody UserRoleRequest request) {
         userRoleService.createRole(request);
