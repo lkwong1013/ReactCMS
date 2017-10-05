@@ -71,11 +71,16 @@ public class AccessRightController {
 
     @RequestMapping(value = {"/addRole"}, method = {RequestMethod.PUT})
     public ResponseEntity addRole(@RequestBody UserRoleRequest request) {
-
         userRoleService.createRole(request);
         userPermissionService.loadRoleAuthMap();
         return new ResponseEntity(HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/updateRole/{id}", method = {RequestMethod.POST})
+    public BaseResponseObj updateRole(@PathVariable("id") Long id, @RequestBody UserRoleRequest request) {
+        userRoleService.updateRole(id ,request);
+        return new BaseResponseObj();
     }
 
 }

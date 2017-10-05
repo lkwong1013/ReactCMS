@@ -15,4 +15,6 @@ public interface UserRoleService {
 
     Page<UserRole> roleList(RoleSearchRequest request) throws IllegalAccessException;
 
+    void updateRole(Long id, UserRoleRequest request);
+
 }

@@ -114,6 +114,8 @@ public class UserPermissionServiceImpl implements UserPermissionService, Initial
 
         if (StringUtils.isNotBlank(request.getUrl())) {
             source.setUrl(request.getUrl());
+        } else {
+            source.setUrl("");
         }
 
         userPermissionRepository.save(source);
