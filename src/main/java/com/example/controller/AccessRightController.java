@@ -48,9 +48,9 @@ public class AccessRightController {
     }
 
     @RequestMapping(value = {"/addPermission"}, method = {RequestMethod.PUT})
-    public ResponseEntity addPermission(@RequestBody UserPermissionRequest request) {
+    public BaseResponseObj addPermission(@RequestBody UserPermissionRequest request) {
         userPermissionService.savePermission(request);
-        return new ResponseEntity(HttpStatus.OK);
+        return new BaseResponseObj();
     }
 
     @RequestMapping(value = "/getPermission/{id}", method = {RequestMethod.POST})
@@ -70,10 +70,10 @@ public class AccessRightController {
     }
 
     @RequestMapping(value = {"/addRole"}, method = {RequestMethod.PUT})
-    public ResponseEntity addRole(@RequestBody UserRoleRequest request) {
+    public BaseResponseObj addRole(@RequestBody UserRoleRequest request) {
         userRoleService.createRole(request);
         userPermissionService.loadRoleAuthMap();
-        return new ResponseEntity(HttpStatus.OK);
+        return new BaseResponseObj();
 
     }
 
