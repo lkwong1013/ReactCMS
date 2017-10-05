@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface UserPermissionRepository extends BaseRepository<UserPermission> {
 
-    UserPermission findByPermissionName(String permissionName);
+    List<UserPermission> findByPermissionName(String permissionName);
 
     List<UserPermission> findByIdIn(List<Long> idList);
 

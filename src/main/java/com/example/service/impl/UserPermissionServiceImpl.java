@@ -1,5 +1,8 @@
 package com.example.service.impl;
 
+import com.example.exception.DuplicateRecordFoundException;
+import com.example.exception.ParameterMissingException;
+import com.example.exception.RecordNotFoundException;
 import com.example.neo4j.domain.UserPermission;
 import com.example.neo4j.domain.UserRole;
 import com.example.neo4j.repo.UserPermissionRepository;
@@ -7,6 +10,7 @@ import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.AuthorityInfo;
 import com.example.object.request.PermissionSearchRequest;
 import com.example.object.request.UserPermissionRequest;
+import com.example.object.response.accessRight.PermissionResponse;
 import com.example.service.UserPermissionService;
 import com.example.utils.SearchingCriteria;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,11 +68,69 @@ public class UserPermissionServiceImpl implements UserPermissionService, Initial
 
     public void savePermission(UserPermissionRequest request) {
 
+        if (StringUtils.isBlank(request.getPermissionName())) {
+            throw new ParameterMissingException("Permission Name");
+        }
+
+        List<UserPermission> chkDuplicate = new ArrayList<>();
+        chkDuplicate = userPermissionRepository.findByPermissionName(request.getPermissionName());
+        if (chkDuplicate != null && chkDuplicate.size() > 0) {
+            throw new DuplicateRecordFoundException();
+        }
+
         UserPermission userPermission = new UserPermission();
         userPermission.setPermissionName(request.getPermissionName());
         userPermission.setUrl(request.getUrl());
 
         userPermissionRepository.save(userPermission);
+
+    }
+
+    public void updatePermission(Long id, UserPermissionRequest request) {
+
+        UserPermission source = userPermissionRepository.findOne(id);
+
+        // Check original record
+        if (source == null) {
+            throw new RecordNotFoundException();
+        }
+
+        // Request Parameter Check
+        if (StringUtils.isBlank(request.getPermissionName())) {
+            throw new ParameterMissingException("Permission Name");
+        }
+
+        // Duplication Check
+        List<UserPermission> chkDuplicate = new ArrayList<>();
+        if (!request.getPermissionName().equals(source.getPermissionName())) {
+            chkDuplicate = userPermissionRepository.findByPermissionName(request.getPermissionName());
+            if (chkDuplicate != null && chkDuplicate.size() > 0) {
+                throw new DuplicateRecordFoundException();
+            }
+        }
+
+        // Normal Case
+        source.setPermissionName(request.getPermissionName());
+
+        if (StringUtils.isNotBlank(request.getUrl())) {
+            source.setUrl(request.getUrl());
+        }
+
+        userPermissionRepository.save(source);
+
+    }
+
+    public PermissionResponse getPermission(Long id) {
+
+        PermissionResponse response = new PermissionResponse();
+        UserPermission source = userPermissionRepository.findOne(id);
+        if (source != null) {
+            response.setPermissionName(source.getPermissionName());
+            response.setPermissionUrl(source.getUrl());
+            return response;
+        }
+
+        throw new RecordNotFoundException("Permission not Found!");
 
     }
 
