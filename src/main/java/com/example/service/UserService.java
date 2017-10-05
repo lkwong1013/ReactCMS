@@ -6,6 +6,7 @@ import com.example.object.request.BaseRequestObj;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
 import com.example.object.request.UserLogoutRequest;
+import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface UserService  {
     List<UserEntity> findByName(String username);
 
     BaseResponseObj memberLogout();
+
+    void changePassword(UserChangePasswordRequest request);
 }

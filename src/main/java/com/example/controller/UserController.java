@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import com.example.object.request.UserLogoutRequest;
+import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +29,12 @@ public class UserController extends ApiGenericController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public BaseResponseObj logout() {
         return userService.memberLogout();
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public BaseResponseObj changePassword(@RequestBody UserChangePasswordRequest request) {
+        userService.changePassword(request);
+        return new BaseResponseObj();
     }
 
 }

@@ -1,6 +1,9 @@
 package com.example.service.impl;
 
+import com.example.exception.BaseException;
 import com.example.exception.DuplicateRecordFoundException;
+import com.example.exception.ParameterMissingException;
+import com.example.exception.RecordNotFoundException;
 import com.example.neo4j.domain.UserEntity;
 import com.example.neo4j.domain.UserRole;
 import com.example.neo4j.repo.UserEntityRepo;
@@ -8,6 +11,7 @@ import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
 import com.example.object.request.UserLogoutRequest;
+import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 import com.example.object.response.UserLoginSession;
 import com.example.service.SystemMessageService;
@@ -18,6 +22,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -245,6 +250,70 @@ public class UserServiceImpl implements UserService {
         }
 
         return response;
+
+    }
+
+    public void changePassword(UserChangePasswordRequest request) {
+
+        String currentUser = httpServletRequest.getHeader("username");
+        if (StringUtils.isBlank(currentUser)) {
+            throw new ParameterMissingException("User Name");
+        }
+        if (StringUtils.isBlank(request.getOldPassword())) {
+            throw new ParameterMissingException("Old-Password");
+        }
+        if (StringUtils.isBlank(request.getPassword())) {
+            throw new ParameterMissingException("New-Password");
+        }
+        if (StringUtils.isBlank(request.getConfirmPassword())) {
+            throw new ParameterMissingException("Confirm-Password");
+        }
+
+        List<UserEntity> source = userEntityRepo.findByName(currentUser);
+
+        if (source != null && source.size() > 0) {
+
+            if (source.size() > 1) {
+                throw new DuplicateRecordFoundException();
+            }
+
+            UserEntity userEntity = source.get(0);
+
+            // Check Password
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            Boolean matches = passwordEncoder.matches(request.getOldPassword(), userEntity.getPassword());
+
+            if (!matches) {
+                throw new BaseException(HttpStatus.BAD_REQUEST, "Incorrect Original Password");
+            }
+
+            // Normal Case
+            if (request.getPassword().equals(request.getConfirmPassword())) {
+                String newPassword = passwordHashing(request.getConfirmPassword());
+                userEntity.setPassword(newPassword);
+                userEntityRepo.save(userEntity);
+            } else {
+                throw new BaseException(HttpStatus.BAD_REQUEST, "Incorrect Confirmation Password");
+            }
+
+
+        } else {
+            throw new RecordNotFoundException("User not found");
+        }
+
+
+    }
+
+    public String passwordHashing(String source) {
+
+        if (StringUtils.isBlank(source)) {
+            log.error("passwordHashing(): Parameter missing.");
+            throw new ParameterMissingException("Source String missing");
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(source);
+
+        return hashedPassword;
 
     }
 
