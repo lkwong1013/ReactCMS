@@ -22,7 +22,7 @@ public class SearchingCriteriaImpl<T> implements SearchingCriteria<T> {
             field.setAccessible(true);
             if (field.get(source) != null) {
                 // String class check
-                if (field.get(source).getClass() == String.class) {
+                if (field.get(source).getClass().equals(String.class)) {
                     String fieldValue = (String)field.get(source);
                     fieldValue = ".*" + fieldValue + ".*";
                     field.set(source, fieldValue);
