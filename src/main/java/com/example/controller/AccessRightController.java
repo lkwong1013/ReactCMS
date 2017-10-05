@@ -64,6 +64,12 @@ public class AccessRightController {
         return new BaseResponseObj();
     }
 
+    @RequestMapping(value = "/deletePermission/{id}", method = {RequestMethod.DELETE})
+    public BaseResponseObj removePermission(@PathVariable("id") Long id) {
+        userPermissionService.removePermission(id);
+        return new BaseResponseObj();
+    }
+
     @RequestMapping(value = {"/roleList"}, method = {RequestMethod.POST})
     public BaseResponseObj roleList(@RequestBody RoleSearchRequest request) throws IllegalAccessException {
         return new BaseResponseObj(HttpStatus.OK, userRoleService.roleList(request));

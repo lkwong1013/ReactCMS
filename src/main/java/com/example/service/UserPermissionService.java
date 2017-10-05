@@ -23,6 +23,8 @@ public interface UserPermissionService {
 
     void updatePermission(Long id, UserPermissionRequest request);
 
+    void removePermission(Long id);
+
     List<UserPermission> findByUrlLike(String url);
 
     PermissionResponse getPermission(Long id);

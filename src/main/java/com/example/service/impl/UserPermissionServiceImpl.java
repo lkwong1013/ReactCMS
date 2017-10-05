@@ -136,6 +136,15 @@ public class UserPermissionServiceImpl implements UserPermissionService, Initial
 
     }
 
+    public void removePermission(Long id) {
+        UserPermission source = userPermissionRepository.findOne(id);
+        if (source != null) {
+            userPermissionRepository.delete(id);
+        } else {
+            throw new RecordNotFoundException();
+        }
+    }
+
     public List<UserPermission> findByUrlLike(String url) {
         return userPermissionRepository.findByUrlLike(url);
     }
