@@ -5,7 +5,6 @@ import com.example.neo4j.domain.UserEntity;
 import com.example.object.request.BaseRequestObj;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
-import com.example.object.request.UserLogoutRequest;
 import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 

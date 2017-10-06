@@ -10,7 +10,6 @@ import com.example.neo4j.repo.UserEntityRepo;
 import com.example.neo4j.repo.UserRoleRepository;
 import com.example.object.request.LoginRequestObj;
 import com.example.object.request.UserEntityRequest;
-import com.example.object.request.UserLogoutRequest;
 import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 import com.example.object.response.UserLoginSession;

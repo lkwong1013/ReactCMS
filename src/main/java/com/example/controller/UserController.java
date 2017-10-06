@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.object.request.UserLogoutRequest;
 import com.example.object.request.user.UserChangePasswordRequest;
 import com.example.object.response.BaseResponseObj;
 import com.example.service.UserService;
