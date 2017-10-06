@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
@@ -50,7 +50,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -64,18 +63,24 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 
 
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "com.example.repository")
+//@EnableMongoRepositories(basePackages = "com.example.repository")
 @EnableNeo4jRepositories({"com.example.neo4j.repo", "BOOT-INF.classes.com.example.neo4j.repo"})/*(basePackages = "com.example.neo4j.repo")*/
 @EntityScan({"com.example", "BOOT-INF.classes.com.example"})
 @ComponentScan("com.example")
 @SpringBootApplication
+@PropertySource("classpath:application.properties")
 public class AppConfig extends SpringBootServletInitializer {
+
+    @Resource
+    private Environment environment;
+
     @Bean
     WebMvcConfigurer configurer () {
         return new WebMvcConfigurerAdapter() {
@@ -90,7 +95,6 @@ public class AppConfig extends SpringBootServletInitializer {
                         .allowedOrigins("*")
                         .allowedMethods("GET", "PUT", "POST", "DELETE", "OPTIONS");
             }
-
         };
     }
 
@@ -148,8 +152,10 @@ public class AppConfig extends SpringBootServletInitializer {
         org.neo4j.ogm.config.Configuration config = new org.neo4j.ogm.config.Configuration();
         config
                 .driverConfiguration()
-                .setDriverClassName("org.neo4j.ogm.drivers.http.driver.HttpDriver")
-                .setURI("http://admin:123456@192.168.1.58:7474");
+//                .setDriverClassName("org.neo4j.ogm.drivers.bolt.driver.BoltDriver")
+//                .setURI("bolt://neo4j:123456@neo4jdb");
+                .setDriverClassName(environment.getProperty("neo4j.driver"))
+                .setURI(environment.getProperty("neo4j.url").trim());
         return config;
     }
 

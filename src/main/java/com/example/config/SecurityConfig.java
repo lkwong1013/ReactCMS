@@ -20,7 +20,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @Configuration
 @EnableAutoConfiguration
 @EnableWebSecurity
-@EnableMongoRepositories
+//@EnableMongoRepositories
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
