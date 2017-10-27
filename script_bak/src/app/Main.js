@@ -157,6 +157,9 @@ export class Main extends React.Component {
                                     <Link to="listTest" onClick={this.handler}>
                                         <MenuItem onTouchTap={this.handleSelectedMenu}>List Test</MenuItem>
                                     </Link>
+                                    <Link to="signup" onClick={this.handler}>
+                                        <MenuItem onTouchTap={this.handleSelectedMenu}>Sign Up Form</MenuItem>
+                                    </Link>
                                 </div>
                             </div>
                         </Drawer>

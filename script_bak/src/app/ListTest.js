@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
-import Pagination from 'materialui-pagination';
+import Pagination from 'material-ui-pagination';
 import {Card} from 'material-ui/Card';
 
 import {
