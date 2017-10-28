@@ -6,7 +6,6 @@ import map from 'lodash/map';
 import timezones from '../data/timezone';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import axios from 'axios';
 
 
 
@@ -37,7 +36,6 @@ class SignupForm extends React.Component {
     }
 
     onChange(e) {
-        console.log(e);
         this.setState({
             [e.target.name]: e.target.value,
         })
@@ -46,9 +44,10 @@ class SignupForm extends React.Component {
     onSave(e) {
         e.preventDefault();
         console.log(this.state);
-        axios.put('/auth/register', {
-            user: this.state
-        })
+        this.props.userSignUpRequest(this.state);
+        // axios.put('/auth/register', {
+        //     user: this.state
+        // })
     }
 
     onHandleSelectionChange(id, name, evt, key, payload) {
@@ -130,6 +129,10 @@ class SignupForm extends React.Component {
         )
     }
 
+}
+
+SignupForm.propTypes = {
+    userSignUpRequest: React.PropTypes.func.isRequired
 }
 
 export default SignupForm;

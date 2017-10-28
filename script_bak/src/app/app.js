@@ -9,16 +9,24 @@ import FirstPage from "./FirstPage";
 import CountryForm from "./CountryForm";
 import UserForm from "./UserForm";
 import ListTest from "./ListTest";
-import SignupForm from "./components/SignupForm";
+import SignupPage from "./pages/SignupPage";
 import Layout from "./Layout";
-
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from "redux";
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+const store = createStore(
+    (state = {} ) => state,
+    applyMiddleware(thunk)
+);
+
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
 render(
+    <Provider store={store}>
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
             <IndexRoute component={SecondPage}></IndexRoute>
@@ -27,8 +35,8 @@ render(
             <Route path="countryForm" name="countryForm" component={CountryForm}></Route>
             <Route path="userForm" name="userForm" component={UserForm}></Route>
             <Route path="listTest" name="listTest" component={ListTest}></Route>
-            <Route path="signup" name="signup" component={SignupForm}></Route>
+            <Route path="signup" name="signup" component={SignupPage}></Route>
         </Route>
-    </Router>,
+    </Router></Provider>,
     document.getElementById('app')
 );
