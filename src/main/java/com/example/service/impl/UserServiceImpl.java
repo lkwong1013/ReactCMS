@@ -19,8 +19,10 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -108,7 +110,12 @@ public class UserServiceImpl implements UserService, InitializingBean {
 
 //        if (!formValidation(formData)) {
         if (StringUtils.isBlank(request.getUserName())) {
-            return new BaseResponseObj(HttpStatus.UNAUTHORIZED, "Parameter missing");
+            return new BaseResponseObj(HttpStatus.BAD_REQUEST, "Parameter missing - userName");
+            // TODO use exception handler
+        }
+
+        if (StringUtils.isBlank(request.getPassword())) {
+            return new BaseResponseObj(HttpStatus.BAD_REQUEST, "Parameter missing - password");
         }
 
         // Check Duplicated record
