@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService, InitializingBean {
     public BaseResponseObj registration(UserEntityRequest request) throws Exception {
 
         BaseResponseObj response = new BaseResponseObj();
-
+        Thread.sleep(5000);
 
         String logPrefix = "registration(): ";
 
