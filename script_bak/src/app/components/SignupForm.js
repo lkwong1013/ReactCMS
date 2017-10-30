@@ -6,7 +6,9 @@ import map from 'lodash/map';
 import timezones from '../data/timezone';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
+import Snackbar from 'material-ui/Snackbar';
+import signupValidate from '../validations/signUp';
+import TextFieldGroup from '../components/common/TextFieldGroup';
 
 
 class SignupForm extends React.Component {
@@ -19,6 +21,8 @@ class SignupForm extends React.Component {
             password: "",
             email: "",
             timezone: "",
+            errors: {},
+            isLoading: false,
             // openDialog: false,
             // dialogMessage: "",
             // dialogHeader: "",
@@ -41,10 +45,28 @@ class SignupForm extends React.Component {
         })
     }
 
+
+    isValid() {
+
+        const { errors, isValid } = signupValidate(this.state);
+        if (!isValid) {
+            this.setState({ errors })
+        }
+
+        return isValid;
+    }
+
     onSave(e) {
         e.preventDefault();
         console.log(this.state);
-        this.props.userSignUpRequest(this.state);
+
+        if (this.isValid()) {
+            this.setState({errors: {}, isLoading: true}); // Reset error msg on every submit
+            this.props.userSignUpRequest(this.state).then(
+                () => ({}),
+                ({data}) => this.setState({errors: data, isLoading: false})
+            );
+        }
         // axios.put('/auth/register', {
         //     user: this.state
         // })
@@ -63,6 +85,8 @@ class SignupForm extends React.Component {
     }
 
     render() {
+
+        const { errors } = this.state;
         const options = map(timezones, (val, key) =>
             <MenuItem key={val} value={val} primaryText={key} />
         )
@@ -71,44 +95,54 @@ class SignupForm extends React.Component {
             <div>
                 <form id="countryForm" onSubmit={this.onSave}>
                     <div className="col-md-12">
-                        <div className="row"><span>User Name</span></div>
-                        <div className="row">
-                            <TextField
-                                name="userName"
-                                id="userName"
-                                required={true}
-                                hintText="E.g. apple"
-                                ref="userName"
-                                value={this.state.userName}
-                                onChange={this.onChange}
+                        { errors.data &&
+                        <div>
+                            <Snackbar
+                                open={ true }
+                                message="Event added to your calendar"
+                                autoHideDuration={4000}
                             />
-                        </div><div className="row"><span>Email</span></div>
+                        </div>}
                         <div className="row">
-                            <TextField
-                                name="email"
-                                id="email"
-                                required={true}
-                                hintText="E.g. xxx@xxx.com"
-                                value={this.state.email}
+                            <TextFieldGroup
+                                field="userName"
+                                id="userName"
+                                label="User Name"
+                                hintText="E.g. apple"
+                                value={this.state.userName}
+                                error={errors.username || errors.data}
                                 onChange={this.onChange}
                             />
                         </div>
-                        <div className="row"><span>Password</span></div>
                         <div className="row">
-                            <TextField
-                                name="password"
+                            <TextFieldGroup
+                                field="email"
+                                id="email"
+                                label="E-mail"
+                                hintText="E.g. xxx@xxx.com"
+                                value={this.state.email}
+                                error={errors.email}
+                                onChange={this.onChange}
+                            />
+                        </div>
+                        <div className="row">
+                            <TextFieldGroup
+                                field="password"
                                 id="password"
-                                required={true}
                                 type="password"
                                 hintText="Password"
+                                label="Password"
                                 value={this.state.password}
+                                error={errors.password}
                                 onChange={this.onChange}
                             />
                         </div>
                         <div className="row">
                             <SelectField
                                 name="timezone"
+                                floatingLabelText="Time Zone"
                                 onChange={this.onHandleSelectionChange.bind(null,null,"timezone")}
+                                errorText={errors.timezone}
                                 value={this.state.timezone}
                             >
                                 <MenuItem value="" disabled>Choose Your Timezone</MenuItem>
@@ -118,6 +152,7 @@ class SignupForm extends React.Component {
                         <div className="row">
                             <RaisedButton
                                 // onClick={this.onSave.bind(this)}
+                                disabled={ this.state.isLoading }
                                 label="Submit"
                                 secondary={true}
                                 type="submit"/>
