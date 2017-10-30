@@ -41,7 +41,7 @@ import static com.example.utils.Constants.MSG_DUPLICATE_RECORD;
  */
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, InitializingBean {
 
     @Autowired
     private UserEntityRepo userEntityRepo;
@@ -314,6 +314,43 @@ public class UserServiceImpl implements UserService {
 
         return hashedPassword;
 
+    }
+
+    public void initialData() {
+
+        // Check user of Super Admin
+        List<UserEntity> userEntityList = userEntityRepo.findByName("superadmin");
+        if (userEntityList != null && userEntityList.size() > 0) {
+            return;
+        } else {
+            // Check role of Super Admin
+            List<UserRole> userRoleList = userRoleRepository.findByRoleName("ROLE_SUPERADMIN");
+            UserRole superUserRole = new UserRole();
+            if (userRoleList == null || userRoleList.size() == 0) {
+                userRoleList = new ArrayList<>();
+                superUserRole.setRoleName("ROLE_SUPERADMIN");
+                userRoleRepository.save(superUserRole);
+                userRoleList.add(superUserRole);
+            } else if (userRoleList.size() > 1) {
+                throw new DuplicateRecordFoundException();
+            }
+
+            UserEntity superUser = new UserEntity();
+            superUser.setName("superadmin");
+            superUser.setPassword(this.passwordHashing("123456"));
+            superUser.setHaveRole(userRoleList);
+            userEntityRepo.save(superUser);
+
+        }
+
+
+
+
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        initialData();
     }
 
 
