@@ -45,31 +45,36 @@ public class ApiAuthController /*extends ApiGenericController<Long, UserAccount,
    @RequestMapping(value = {"/login"}, method = {RequestMethod.POST})
    public LoginResponseObj login(@RequestBody LoginRequestObj requestObj) throws Exception {
 
-       String logPrefix = "login():";
+        String logPrefix = "login():";
 
-       LoginResponseObj loginResponseObj = new LoginResponseObj();
+        LoginResponseObj loginResponseObj = new LoginResponseObj();
 
-       if (StringUtils.isBlank(requestObj.getUserName()) || StringUtils.isBlank(requestObj.getPassword())) {
-           throw new BaseException(HttpStatus.BAD_REQUEST, "Parameter missing");
-       }
+        if (StringUtils.isBlank(requestObj.getUserName()) || StringUtils.isBlank(requestObj.getPassword())) {
+            throw new BaseException(HttpStatus.BAD_REQUEST, "Parameter missing");
+        }
 
-       HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-       BaseResponseObj resp = userService.memberLogin(requestObj);
-       if (resp.getStatus().equals(HttpStatus.OK)) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        BaseResponseObj resp = userService.memberLogin(requestObj);
+        if (resp.getStatus().equals(HttpStatus.OK)) {
 
-           String newToken = userService.issueToken(requestObj);
-           loginResponseObj.setToken(newToken);
+            String newToken = userService.issueToken(requestObj);
+            loginResponseObj.setToken(newToken);
 
-       } else {
-           throw new BaseException(HttpStatus.BAD_REQUEST, resp.getMessage());
-       }
-       return loginResponseObj;
-   }
+        } else {
+            throw new BaseException(HttpStatus.BAD_REQUEST, resp.getMessage());
+        }
+        return loginResponseObj;
+    }
 
 
     @RequestMapping(value = {"/register"}, method = {RequestMethod.POST})
     public BaseResponseObj register(@RequestBody UserEntityRequest formData) throws Exception {
         return userService.registration(formData);
+    }
+
+    @RequestMapping(value = {"/dummy"}, method = {RequestMethod.POST})
+    public BaseResponseObj dummy() {
+        return new BaseResponseObj(HttpStatus.OK, null);
     }
 
 }
