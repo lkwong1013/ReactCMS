@@ -13,14 +13,18 @@ import SignupPage from "./pages/SignupPage";
 import Layout from "./Layout";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { createStore, applyMiddleware } from "redux";
+import { applyMiddleware, createStore, compose } from "redux";
+import rootReducer from "./rootReducer";
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
 const store = createStore(
-    (state = {} ) => state,
-    applyMiddleware(thunk)
+    rootReducer,
+    compose(
+        applyMiddleware(thunk),
+        window.devToolsExtension ? window.devToolsExtension() : f => f
+    )
 );
 
 // Render the main app react component into the app div.

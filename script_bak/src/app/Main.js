@@ -14,6 +14,7 @@ import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
 import Drawer from 'material-ui/Drawer';
 import { IndexLink, Link } from "react-router";
+import FlashMessageList from "./components/FlashMessageList";
 
 import {
     cyan500, cyan700, deepOrange500,
@@ -122,6 +123,8 @@ export class Main extends React.Component {
                             zDepth={1}
                             style={{backgroundColor:'#4CAF50', zIndex: 1600, position:'fixed', marginTop:APP_BAR_TOP_MARGIN}}
                         />
+
+                        <FlashMessageList />
 
                         {/*Global Dialog Box*/}
                         <Dialog
