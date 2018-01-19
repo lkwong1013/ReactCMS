@@ -97,12 +97,8 @@ public class Neo4JTestController {
     public BaseResponseObj pagingTest() {
         Pageable pageable = new PageRequest(0, 5);
         Page<UserEntity> paged = userEntityRepo.findAll(pageable);
-
         return new BaseResponseObj(HttpStatus.OK, paged);
 
     }
-
-
-
 
 }

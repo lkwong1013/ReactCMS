@@ -4,7 +4,6 @@
  */
 import React, {Component} from 'react';
 
-
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -43,7 +42,7 @@ const OPENED_DRAWER_CONTENT_LEFT_MARGIN = '300px';
 const APP_BAR_TOP_MARGIN = '-100px';
 const CONTENT_TOP_MARGIN = '100px';
 
-export class Main extends React.Component {
+class Main extends React.Component {
     constructor(props, context) {
         super(props, context);
 
@@ -153,6 +152,9 @@ export class Main extends React.Component {
                                     </Link>
                                     <Link to="userForm" onClick={this.handler}>
                                         <MenuItem onTouchTap={this.handleSelectedMenu}>User Form</MenuItem>
+                                    </Link>
+                                    <Link to="listTest" onClick={this.handler}>
+                                        <MenuItem onTouchTap={this.handleSelectedMenu}>List Test</MenuItem>
                                     </Link>
                                 </div>
                             </div>

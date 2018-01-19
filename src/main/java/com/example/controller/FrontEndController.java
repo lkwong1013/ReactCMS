@@ -45,7 +45,12 @@ public class FrontEndController extends BaseController {
 //        String welcome = messageSource.getMessage("msg.loginFailed",null, LocaleContextHolder.getLocale());
 //        String test = BaseUtils.getMessage("msg.loginFailed");
         String test = envSetting.getSetting("filelocation");
-        return "home";
+        return "index";
+    }
+
+    @RequestMapping(value = { "/test" }, method = RequestMethod.GET)
+    public String testPage(ModelMap model, HttpServletRequest request) throws Exception {
+        return "test";
     }
 
 

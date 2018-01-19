@@ -2,6 +2,7 @@ package com.example.domain;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,5 +25,6 @@ public class Account {
     private String userName;
 
     private String password;
+
 
 }

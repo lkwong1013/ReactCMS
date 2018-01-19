@@ -21,5 +21,5 @@ public interface UserEntityRepo extends BaseRepository<UserEntity> {
 
     @Query("MATCH (user:UserEntity) WHERE user.name=~ {0} and user.email=~ {1} return user")
     Page<UserEntity> searchByCriteriaPageTest(String username, String email, Pageable pageable);
-//    List<UserEntity> findAll();
+
 }

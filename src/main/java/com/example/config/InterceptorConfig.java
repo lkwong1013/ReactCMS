@@ -40,7 +40,7 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
 //        registry.addInterceptor(securityInterceptor()).excludePathPatterns("/**/api/**");
 		/*----- [End] Security Interceptor -----*/
 		/*----- [Start] API Interceptor -----*/
-        registry.addInterceptor(apiInterceptor()).addPathPatterns("/**/api/**").excludePathPatterns("/**/login", "/**/register");
+        registry.addInterceptor(apiInterceptor()).addPathPatterns("/**/api/**").excludePathPatterns("/**/login", "/**/register", "/**/dummy");
 		/*----- [End] API Interceptor -----*/
 		/*----- [Start] Locale Change Interceptor -----*/
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();

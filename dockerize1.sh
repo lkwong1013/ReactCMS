@@ -9,11 +9,14 @@ MVN_OPT=
 #cd script
 #npm run build
 #cd ..
-gradle clean myCopy war
+#gradle clean myCopy war
 docker build -t $PROJECT_NAME .
 docker stop $PROJECT_NAME
 docker rm $PROJECT_NAME
 docker run  -p$HOST_PORT:8080 \
             -p$DEBUG_PORT:$DEBUG_PORT \
             -e "JAVA_OPTS=\"-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n\"" \
+            --link neo4j:neo4jdb \
             --name $PROJECT_NAME $PROJECT_NAME \
+
+#-e "neo4j.url=\"http://neo4j:123456@neo4jdb:7474\"" \
